@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../redux.min.js"></script>
+  <script src="../../immer.min.js"></script>
+</head>
+<body>
+  <h1 id="nome"></h1>
+  <p id="email"></p>
+  <p>Tempo Restante: <span id="tempo"></span></p>
+  <p>Total de aulas: <span id="total"></span></p>
+
+  <script type="module">
+    import store from './store.js'
+    import { incrementarTempo, reduzirTempo, modificarEmail} from './aluno.js'
+    import { completarAula, completarCurso, resetarCurso } from './aulas.js'
+
+    store.dispatch(incrementarTempo())
+    store.dispatch(incrementarTempo())
+    store.dispatch(incrementarTempo())
+    store.dispatch(incrementarTempo())
+    store.dispatch(incrementarTempo())
+    store.dispatch(incrementarTempo())
+    store.dispatch(modificarEmail('vieira.adyson@gmail.com'))
+    store.dispatch(completarCurso())
+
+    function render() {
+      const { aluno, aulas } = store.getState()
+      const nome = document.getElementById('nome')
+      nome.innerText = aluno.nome
+      const email = document.getElementById('email')
+      email.innerText = aluno.email
+      const tempoRestante = document.getElementById('tempo')
+      tempoRestante.innerText = aluno.diasRestantes
+      const aulasCompletadas = document.getElementById('total')
+      aulasCompletadas.innerText = aulas.filter((item) => item.completa === true).length
+    }
+
+    render()
+
+    store.subscribe(render)
+
+  </script>
+</body>
+</html>
