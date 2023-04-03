@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../redux.min.js"></script>
+</head>
+<body>
+  <script type="module">
+    import store from './store.js'
+    import { fetchToken } from './token.js'
+    import { fetchUser } from './user.js'
+    
+
+    async function login(user) {
+      let state = store.getState()
+      if (state.token.token === null) {
+        await store.dispatch(fetchToken('https://dogsapi.origamid.dev/json/jwt-auth/v1/token', user))
+        state = store.getState()
+      }
+      await store.dispatch(fetchUser('https://dogsapi.origamid.dev/json/api/user', state.token.token))
+    }
+    
+    login({ username: 'dog', password: 'dog' })
+
+  </script>
+</body>
+</html>
