@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./immer.min.js"></script>
+  <script src="./redux.min.js"></script>
+</head>
+<body>
+  <div id="box" style="width: 40px; height: 100px; background-color: blue;"></div>
+  <button class="add">INCREMENTAR</button>
+
+  <script>
+    function reducer(state = 0, action) {
+      switch (action.type) {
+        case 'MODIFICA_WIDTH':
+          return action.payload;
+        default: 
+          return state;
+      }
+    }
+
+    const store = Redux.createStore(
+      reducer,
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+
+    document.querySelector('.add').addEventListener('click', () => {
+      store.dispatch({ type: 'MODIFICA_WIDTH', payload: 150})
+    })
+
+    function render() {
+      const state = store.getState()
+      const box = document.getElementById('box')
+      box.style.width = state + 'px'
+    }
+
+    store.subscribe(render)
+
+  </script>
+</body>
+</html>
