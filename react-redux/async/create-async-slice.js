@@ -98,9 +98,8 @@ const user = createAsyncSlice({
 export const fetchToken = token.asyncAction;
 export const fetchUser = user.asyncAction;
 
-const reducer = combineReducers({token: token.reducer, user: user.reducer})
+export const reducer_ = combineReducers({token: token.reducer, user: user.reducer})
 
-export default reducer;
 
 export const login = (user) => async (dispatch) => {
   try {
