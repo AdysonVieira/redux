@@ -1,0 +1,14 @@
+// Podemos criar o seletor fora do useSelector e passa-lo como callback
+
+export const getPhotoFiltered = (state) => {
+  const { data } = state.feed;
+  const overFiveKg = data?.filter((item) => item.peso >= 5)
+  const convertToPounds = overFiveKg?.map((item) = ({ ...item, peso: Math.floor(item.peso * 2.2) }))
+  return convertToPounds
+}
+
+// App.js
+
+const data = useSelector(getPhotoFiltered);
+
+// ...data.map()
